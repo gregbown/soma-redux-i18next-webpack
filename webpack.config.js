@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const Manifest = require('webpack-manifest-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 // Create an interface to glob https://github.com/isaacs/node-glob
 // https://stackoverflow.com/questions/32874025/how-to-add-wildcard-mapping-in-entry-of-webpack/34545812#34545812
@@ -120,7 +120,7 @@ module.exports = (env, argv) => ({
       algorithm: 'gzip',
       test: /\.js(\?.*)?$/i
     }),
-    new Manifest(),
+    new WebpackManifestPlugin(),
     new webpack.ProvidePlugin({
       _: 'lodash',
       $: 'jquery',
