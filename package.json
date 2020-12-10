@@ -59,6 +59,7 @@
     "i18next",
     "ejs",
     "signals",
+    "plain js",
     "@soundstep/soma",
     "@soundstep/infuse",
     "inversion of control",
