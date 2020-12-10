@@ -1,0 +1,27 @@
+## A super lightweight client side framework setup using Soma, Redux, i18next, EJS and webpack
+
+Demo is a todo application
+
+Build:
+
+```bash
+npm run build
+```
+
+Serve:
+
+```bash
+npm run serve:prod
+```
+Soma is a scalable Javascript framework created to help developers to write loosely-coupled applications to increase scalability and maintainability.
+See: https://github.com/soundstep/soma
+The older version found [here](https://github.com/somajs/somajs) is documented [here](http://somajs.github.io/somajs/site/)
+
+Redux can be found [here](https://github.com/reduxjs/redux), and the documentation is [here](https://redux.js.org/introduction/getting-started)
+
+i18next client side localization found [here](https://github.com/i18next/i18next) and documented [here](https://www.i18next.com/overview/getting-started)
+
+EJS template rendering works both server and client side, however the webpack client side setup is a bit tricky because the library includes fs and path from NodeJS
+The EJS library can be found [here](https://github.com/mde/ejs)
+
+Webpack can be found [here](https://github.com/webpack/webpack) and documentation [here](https://webpack.js.org/concepts/)

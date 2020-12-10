@@ -1,0 +1,58 @@
+{
+  "templates": {
+    "header": [
+      "<header>",
+      "<div class='dropdown locale-dropdown position-absolute <%= locale %>'>",
+      "<button class='btn btn-light dropdown-toggle position-absolute' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><%= i18next.t('locale') %></button>",
+      "<div class='dropdown-menu dropdown-menu-right el-6' aria-labelledby='dropdownMenuButton'>",
+      "<a class='dropdown-item locale-link<% if (locale === 'en') { %> active<% } %>' <% if (locale === 'en') { %>disabled<% } %> data-locale='en'><%= i18next.t('english') %></a>",
+      "<a class='dropdown-item locale-link<% if (locale === 'zh') { %> active<% } %>' <% if (locale === 'zh') { %>disabled<% } %> data-locale='zh'><%= i18next.t('chinese') %></a>",
+      "</div>",
+      "</div>",
+      "<h1><%= i18next.t('TODO')%></h1>",
+      "</header>"
+    ],
+    "newTodo": [
+      "<input id='newTodo' placeholder='<%= i18next.t(\"What needs to be done?\") %>'>"
+    ],
+    "todoList": [
+      "<% var shouldRender = function(filter, todo) { %>",
+      "<% if (filter === 'active' && todo.completed === false) { %>",
+      "<li class='todo-item active'>",
+      "<input class='toggle' type='checkbox' value='<%= todo.id %>'>",
+      "<input id='<%= todo.id %>' class='todo' readonly value='<%= todo.text %>'>",
+      "<button type='button' value='<%= todo.id %>' class='destroy'></button>",
+      "</li>",
+      "<% } else if (filter === 'completed' && todo.completed === true) { %>",
+      "<li class='todo-item completed completed'>",
+      "<input class='toggle' type='checkbox' checked value='<%= todo.id %>'>",
+      "<input id='<%= todo.id %>' class='todo' readonly value='<%= todo.text %>'>",
+      "<button type='button' value='<%= todo.id %>' class='destroy'></button>",
+      "</li>",
+      "<% } else if (filter === 'all') {  %>",
+      "<li class='todo-item<% if (todo.completed) { %> completed<% } %> all'>",
+      "<input class='toggle' type='checkbox' <% if (todo.completed) { %>checked<% } %> value='<%= todo.id %>'>",
+      "<input id='<%= todo.id %>' class='todo' readonly value='<%= todo.text %>'>",
+      "<button type='button' value='<%= todo.id %>' class='destroy'></button>",
+      "</li>",
+      "<% } %>",
+      "<% } %>",
+      "<% for (let todo of todos) { %>",
+      "<%= shouldRender(filter, todo); %>",
+      "<% } %>"
+    ],
+    "footer": [
+      "<footer id='footer' class='<% if (todos > 0) { %>d-none<% } %>'>",
+      "<span id='todoCountText'><%= todoCountText %></span>",
+      "<ul class='filters'>",
+      "<li><a id='all' class='filter-button<% if (filter === 'all') { %> selected<% } %>'><%= i18next.t('All') %></a></li>",
+      "<li><a id='active' class='filter-button<% if (filter === 'active') { %> selected<% } %>'><%= i18next.t('Active') %></a></li>",
+      "<li><a id='completed' class='filter-button<% if (filter === 'completed') { %> selected<% } %>'><%= i18next.t('Completed') %></a></li>",
+      "</ul>",
+      "<% if (completed > 0) { %>",
+      "<button id='clearCompleted'><%= i18next.t('Clear completed') %> (<%= completed %>)</button>",
+      "<% } %>",
+      "</footer>"
+    ]
+  }
+}

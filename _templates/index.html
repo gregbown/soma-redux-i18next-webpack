@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>website</title>
+    <link rel="stylesheet" href="/css/main.min.css">
+  </head>
+
+  <body class="d-flex flex-column">
+    <div id="todoapp" class="container pl-0 pr-0">
+      <header>
+        <div class="dropdown locale-dropdown position-absolute en">
+          <button class="btn btn-light dropdown-toggle position-absolute" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Locale</button>
+          <div class="dropdown-menu dropdown-menu-right el-6" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item locale-link active" data-locale="en">English</a>
+            <a class="dropdown-item locale-link" data-locale="zh">Chinese</a>
+          </div>
+        </div>
+        <h1>TODO</h1>
+      </header>
+      <section id="root">
+        <div class="todo-input-container">
+          <input id="toggleAll" type="checkbox">
+          <input id="newTodo" placeholder="What needs to be done?">
+        </div>
+        <section id="main">
+          <ul id="todoList"></ul>
+        </section>
+        <footer id="footer" class="d-none"></footer>
+      </section>
+    </div>
+  </body>
+</html>

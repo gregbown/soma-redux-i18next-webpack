@@ -1,0 +1,21 @@
+{
+  "Active": "Active",
+  "All": "All",
+  "test": "loaded",
+  "TODO": "TODO",
+  "Menu": "Menu",
+  "Clear completed": "Clear completed",
+  "Completed": "Completed",
+  "What needs to be done?": "What needs to be done??",
+  "No items left": "No items left",
+  "item left": "item left",
+  "items left": "items left",
+  "chinese": "Chinese",
+  "english": "English",
+  "locale": "Locale",
+  "error": {
+    "404": "Not found",
+    "oops": "Oops",
+    "error": "Error"
+  }
+}
