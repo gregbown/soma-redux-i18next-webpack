@@ -1,4 +1,4 @@
-## A super lightweight client side framework setup using Soma, Redux, i18next, EJS and webpack
+## A super lightweight client side framework setup using Soma, Redux, i18next, EJS, SCSS, Material Design icons and webpack
 
 Demo is a todo application
 
@@ -25,3 +25,8 @@ EJS template rendering works both server and client side, however the webpack cl
 The EJS library can be found [here](https://github.com/mde/ejs)
 
 Webpack can be found [here](https://github.com/webpack/webpack) and documentation [here](https://webpack.js.org/concepts/)
+
+Using [Material Design icons](https://material.io/resources/icons/?style=baseline) along with the [latest SASS/SCSS CSS compilation](https://github.com/sass/dart-sass).
+The Material Design icons are implemented in a slightly different way than most people would, using sudo elements :before.
+I am pretty excited that they work this way since adding extra span tags is not always ideal.
+

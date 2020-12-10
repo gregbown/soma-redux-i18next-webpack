@@ -20,7 +20,10 @@
     "@soundstep/infuse",
     "inversion of control",
     "dependancy injection",
-    "lightweight framework"
+    "lightweight framework",
+    "Material Design Icons",
+    "SASS/SCSS",
+    "sass/dart"
   ],
   "author": "Greg Bown",
   "license": "MIT",
