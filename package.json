@@ -7,7 +7,21 @@
     "build": "webpack --mode production",
     "serve:prod": "ws -d dist --spa /index.html"
   },
-  "keywords": [],
+  "keywords": [
+    "redux",
+    "soma",
+    "soma.js",
+    "webpack",
+    "i18next",
+    "ejs",
+    "signals",
+    "plain js",
+    "@soundstep/soma",
+    "@soundstep/infuse",
+    "inversion of control",
+    "dependancy injection",
+    "lightweight framework"
+  ],
   "author": "Greg Bown",
   "license": "MIT",
   "devDependencies": {
