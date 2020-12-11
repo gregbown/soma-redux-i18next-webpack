@@ -1,4 +1,5 @@
 import cookies from 'browser-cookies';
+import {foot} from "./foot";
 
 'use strict';
 

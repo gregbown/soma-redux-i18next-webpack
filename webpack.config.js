@@ -28,7 +28,7 @@ module.exports = (env, argv) => ({
     minimize: true,
     minimizer: [
       new TerserPlugin({
-        exclude: ["app"],
+        // exclude: ["app"],
         extractComments: {
           condition: /^\**!|@preserve|@license|@cc_on/i,
           filename: (fileData) => {
@@ -43,17 +43,30 @@ module.exports = (env, argv) => ({
           ecma: undefined,
           parse: {},
           compress: {},
-          mangle: true, // Note `mangle.properties` is `false` by default.
+          mangle: {
+            properties: false,
+            reserved: [
+              "i18next",
+              "emitter",
+              "rws",
+              "loader",
+              "renderer",
+              "actions",
+              "todos",
+              "filter",
+              "locale",
+              "reducers",
+              "configuration",
+              "store",
+              "head",
+              "input",
+              "list",
+              "foot"
+            ]
+          },
           module: false,
-          // Deprecated
-          // output: null,
-          // format: null,
-          // toplevel: false,
-          // nameCache: null,
-          // ie8: false,
           keep_classnames: true,
-          keep_fnames: true,
-          // safari10: false,
+          keep_fnames: true
         },
       }),
     ],

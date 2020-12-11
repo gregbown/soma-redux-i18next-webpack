@@ -1,12 +1,31 @@
 {
   "name": "soma-redux-webpack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Super lightweight client side framework using ES6 soma, Redux, i18next, EJS and Webpack",
   "main": "src/main.js",
   "scripts": {
     "build": "webpack --mode production",
     "serve:prod": "ws -d dist --spa /index.html"
   },
+  "keywords": [
+    "@soundstep/infuse",
+    "@soundstep/soma",
+    "bootstrap",
+    "dependancy injection",
+    "ejs",
+    "i18next",
+    "inversion of control",
+    "lightweight framework",
+    "Material Design Icons",
+    "plain js",
+    "redux",
+    "sass/dart",
+    "SASS/SCSS",
+    "signals",
+    "soma",
+    "soma.js",
+    "webpack"
+  ],
   "author": "Greg Bown",
   "license": "MIT",
   "devDependencies": {
@@ -51,21 +70,6 @@
     "webpack-cli": "^4.2.0",
     "webpack-manifest-plugin": "^3.0.0"
   },
-  "keywords": [
-    "redux",
-    "soma",
-    "soma.js",
-    "webpack",
-    "i18next",
-    "ejs",
-    "signals",
-    "plain js",
-    "@soundstep/soma",
-    "@soundstep/infuse",
-    "inversion of control",
-    "dependancy injection",
-    "lightweight framework"
-  ],
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@hapi/joi": "^17.1.1",

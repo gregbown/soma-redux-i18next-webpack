@@ -1,5 +1,7 @@
 'use strict';
 
+import {foot} from "./foot";
+
 const ENTER_KEY = 13;
 const ESCAPE_KEY = 27;
 
