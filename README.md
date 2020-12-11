@@ -1,6 +1,6 @@
-## A super lightweight client side framework setup/example using Soma, Redux, i18next, EJS, SCSS, Material Design icons and webpack
+## A super lightweight client side framework setup/example using Soma, Redux, i18next, EJS, SCSS, Bootstrap, Material Design icons and Webpack
 
-Demo is a todo application
+Demo is a todo application. Through the magic of Webpack it is reduced from about 1,300kb down to 111kb
 
 Build:
 
@@ -30,16 +30,17 @@ The EJS library can be found [here](https://github.com/mde/ejs).
 I discovered an interesting way to use EJS templates somewhat like a JSX component logic, based on this [stackoverflow](https://stackoverflow.com/questions/53797268/making-component-like-elements-in-ejs)
 Using [this method](https://github.com/gregbown/soma-redux-i18next-webpack/blob/5bc24b06c85dc3ffae4a5a17a877fa010c154121/_assets/json/config.json#L18) the todos conditionally render based on the filters All, Completed and Active.
 
-Webpack can be found [here](https://github.com/webpack/webpack) and documentation [here](https://webpack.js.org/concepts/)
+[Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) is also included, along with theme compilation in SCSS. [repo](https://github.com/twbs/bootstrap)
 
 Using [Material Design icons](https://material.io/resources/icons/?style=baseline) along with the [latest SASS/SCSS CSS compilation](https://github.com/sass/dart-sass).
 I implemented the Material Design icons in a slightly different way than most people would, [using sudo elements :before](https://github.com/gregbown/soma-redux-i18next-webpack/blob/5bc24b06c85dc3ffae4a5a17a877fa010c154121/_scss/theme/todo-theme.scss#L176).
 I am pretty excited that they work this way since adding extra span tags is not always ideal.
 
+Webpack can be found [here](https://github.com/webpack/webpack) and documentation [here](https://webpack.js.org/concepts/)
+
 Notes on using Webpack:
-I had to exclude the app from minimizing since it wiped out the [infuse](https://github.com/soundstep/infuse) libraries ability to inject dependencies because method, module or class names weren't persisted.
-Somebody leave a comment if you know the trick to getting this to work. At least I was able to crunch down the vendor bundle from 1,249kb to 105kb.
-With compression, all the JavaScript along with all the libs weighs in at 115kb!  Thank you Webpack!
+I had to spend a bit of time figuring out the syntax for the Webpack Terser plugin in order to minimize everything. Originally it wiped out the [infuse](https://github.com/soundstep/infuse) libraries ability to inject dependencies because method, module or class names weren't persisted.
+After much experimentation, I was able to get all the JavaScript including all the libs down to 111kb!  Thank you Webpack!
 
 TODO: improve webpack build to maybe have a dev mode
 
