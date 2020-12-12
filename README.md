@@ -8,7 +8,7 @@ Build:
 npm run build
 ```
 
-Serve using [local-web-server](https://github.com/lwsjs/local-web-server):
+Simulates a production server using [local-web-server](https://github.com/lwsjs/local-web-server):
 
 ```bash
 npm run serve:prod

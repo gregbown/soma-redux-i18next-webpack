@@ -137,6 +137,7 @@ module.exports = (env, argv) => ({
       ejs: 'ejs'
     })
   ],
+  // TODO This is not setup yet
   devServer: {
     contentBase: 'dist',
     watchContentBase: true,
