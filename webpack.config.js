@@ -63,12 +63,9 @@ module.exports = (env, argv) => ({
               "list",
               "foot"
             ]
-          },
-          module: false,
-          keep_classnames: true,
-          keep_fnames: true
-        },
-      }),
+          }
+        }
+      })
     ],
     splitChunks: {
       cacheGroups: {
