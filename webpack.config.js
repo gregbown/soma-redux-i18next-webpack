@@ -13,14 +13,12 @@ const TerserPlugin = require("terser-webpack-plugin");
 const stylesForPages = pattern => glob.sync(pattern);
 module.exports = (env, argv) => ({
   resolve: {
+    // Fixes for using EJS client side
     alias: {
       fs: false,
       path: false
     }
   },
-  // node: {
-  //   fs: 'empty'
-  // },
   entry: {
     app: ['./src/main.js',  './_scss/main.scss', ...stylesForPages('./_scss/_pages/*.scss')]
   },
@@ -135,7 +133,7 @@ module.exports = (env, argv) => ({
       _: 'lodash',
       $: 'jquery',
       jQuery: 'jquery',
-      i18next: 'i18next',
+      i18next: 'i18next', // <= this does not seem to work, I still have to use => window['i18next'] = i18next;
       ejs: 'ejs'
     })
   ],
