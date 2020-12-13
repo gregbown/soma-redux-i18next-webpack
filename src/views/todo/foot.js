@@ -9,9 +9,9 @@
  * @param {object} emitter
  *
  */
-export const foot = function (store, actions, renderer, emitter) {
-  console.log('Foot:constructor');
-  this.footer = document.getElementById('footer');
+export const filtering = function (store, actions, renderer, emitter) {
+  console.log('Filtering:constructor');
+  this.filters = document.getElementById('filters');
   this.clearCompleted = null;
   this._store = store;
   this._actions = actions;
@@ -29,15 +29,15 @@ export const foot = function (store, actions, renderer, emitter) {
   return this;
 };
 
-foot.prototype = {
+filtering.prototype = {
   renderFooter: function(state) {
     if (Array.isArray(state.todos)) {
-      this._renderer.render(this, this.getFooterData(state), {mode: 'replace', id: 'footer'}, this.addRenderedFooterListeners);
+      this._renderer.render(this, this.getFooterData(state), {mode: 'replace', id: 'filters'}, this.addRenderedFooterListeners);
     }
   },
   storeUpdated: function() {
     this._current = this._store.getState();
-    console.log('Store updated in footer', this._current);
+    console.log('Store updated in filtering', this._current);
     this.renderFooter(this._current);
   },
   filter: function(event) {
@@ -51,7 +51,7 @@ foot.prototype = {
   },
   addRenderedFooterListeners: function(instance) {
     console.log('Add footer listeners');
-    instance.footer = document.getElementById('footer');
+    instance.filters = document.getElementById('filters');
     instance.clearCompleted = document.getElementById('clearCompleted');
     if(instance.clearCompleted !== null) {
       instance.clearCompleted.addEventListener('click', instance.clearCompletedTodos.bind(instance));

@@ -1,5 +1,5 @@
 import cookies from 'browser-cookies';
-import {foot} from "./foot";
+import {foot} from "../todo/foot";
 
 'use strict';
 

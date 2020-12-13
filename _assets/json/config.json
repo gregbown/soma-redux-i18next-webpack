@@ -41,8 +41,8 @@
       "<%= shouldRender(filter, todo); %>",
       "<% } %>"
     ],
-    "footer": [
-      "<footer id='footer' class='<% if (todos > 0) { %>d-none<% } %>'>",
+    "filters": [
+      "<div id='filters' class='<% if (todos > 0) { %>d-none<% } %>'>",
       "<span id='todoCountText'><%= todoCountText %></span>",
       "<ul class='filters'>",
       "<li><a id='all' class='filter-button<% if (filter === 'all') { %> selected<% } %>'><%= i18next.t('All') %></a></li>",
@@ -52,7 +52,7 @@
       "<% if (completed > 0) { %>",
       "<button id='clearCompleted'><%= i18next.t('Clear completed') %> (<%= completed %>)</button>",
       "<% } %>",
-      "</footer>"
+      "</div>"
     ]
   }
 }

@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {foot} from "../views/foot";
+import {foot} from "../views/todo/foot";
 
 export const reducers = function(todos, filter, locale) {
   if (typeof todos === 'undefined') {

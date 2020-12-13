@@ -1,4 +1,3 @@
-/*globals IOC:false*/
 import * as _ from 'lodash';
 import * as $ from 'jquery';
 import 'popper.js/dist/umd/popper';
@@ -19,10 +18,11 @@ import {locale} from './reducers/locale';
 import {reducers} from './reducers/reducers';
 import {configuration} from './store/configuration';
 import {store} from './store';
-import {head} from './views/head';
-import {input} from './views/input';
-import {list} from './views/list';
-import {foot} from './views/foot';
+import {head} from './views/common/head';
+import {input} from './views/todo/input';
+import {list} from './views/todo/list';
+import {filtering} from './views/todo/foot';
+import {router} from './controllers/router';
 
 'use strict';
 
@@ -45,6 +45,7 @@ if (typeof ejs === 'undefined') {
  * See: https://github.com/soundstep/soma/blob/master/examples/helloworld/index.html */
 const App = new soma.Application.extend({
   init: function() {
+    /* Important! These string names must be added to webpack terser plugin reserved array */
     this.injector.mapClass('rws', rws, true);
     this.injector.mapClass('loader', loader, true);
     this.injector.mapClass('renderer', renderer, true);
@@ -58,17 +59,20 @@ const App = new soma.Application.extend({
     this.injector.mapClass('head', head, true);
     this.injector.mapClass('input', input, true);
     this.injector.mapClass('list', list, true);
-    this.injector.mapClass('foot', foot, true);
+    this.injector.mapClass('filtering', filtering, true);
+    this.injector.mapClass('router', router, true);
   },
   start: function() {
+    /* Set if not set. Typically this cookie should be set by the server, Apache, NGINX etc.
+     * to the users preferred language set in their browser.  TODO Create document for doing this on server */
     const lng = cookies.get('locale') || 'en';
-    cookies.set('locale', lng, {expires: new Date(Date.now() + 86400000), httpOnly: false, domain: '127.0.0.1'})
+    cookies.set('locale', lng, {expires: new Date(Date.now() + 86400000), httpOnly: false, domain: '127.0.0.1'});
     const i18nOptions = {
       fallbackLng: lng,
       preload: ['en', 'zh'],
       load: 'languageOnly', // Prevents backend from trying to load ./en-US/...
-      ns: 'translation',
-      detectLanguage: true,
+      ns: 'translation', // The name of your JSON file
+      detectLanguage: true, // lookupQuerystring is the cookie key
       detection: {order: ['cookie', 'querystring'], lookupCookie: 'locale', lookupQuerystring: 'locale', caches: false},
       defaultNS: 'translation', // The name of your JSON file
       backend: {loadPath: '/json/locales/{{lng}}/{{ns}}.json'},
@@ -89,7 +93,7 @@ const App = new soma.Application.extend({
       const head = this.injector.getValue('head');
       const input = this.injector.getValue('input');
       const list = this.injector.getValue('list');
-      const foot = this.injector.getValue('foot');
+      const filtering = this.injector.getValue('filtering');
       const loader = this.injector.getValue('loader');
       this.emitter.dispatch('start');
     }.bind(this));

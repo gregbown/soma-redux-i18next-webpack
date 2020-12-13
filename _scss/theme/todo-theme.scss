@@ -147,7 +147,7 @@ button {
   box-shadow: none;
 }
 
-#main {
+#list {
   position: relative;
   z-index: 2;
   border-top: 1px dotted #adadad;
@@ -319,7 +319,7 @@ label[for='toggleAll'] {
   }
 }
 
-#footer {
+#filters {
   color: #777;
   padding: 0 15px;
   position: absolute;
