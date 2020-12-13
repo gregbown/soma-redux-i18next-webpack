@@ -59,7 +59,8 @@ module.exports = (env, argv) => ({
               "head",
               "input",
               "list",
-              "foot"
+              "foot",
+              "router"
             ]
           }
         }

@@ -60,6 +60,7 @@ const App = new soma.Application.extend({
     this.injector.mapClass('input', input, true);
     this.injector.mapClass('list', list, true);
     this.injector.mapClass('filtering', filtering, true);
+    // TODO Routing is not implemented yet
     this.injector.mapClass('router', router, true);
   },
   start: function() {
