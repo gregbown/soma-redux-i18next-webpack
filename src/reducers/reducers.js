@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import {foot} from "../views/todo/foot";
+// import {routerReducer} from 'redux-first-routing';
 
-export const reducers = function(todos, filter, locale) {
+export const reducers = function(todos, filter, locale, localize, routerReducer) {
   if (typeof todos === 'undefined') {
     throw new Error('ERROR: Todos reducer is undefined in combine reducers');
   }
@@ -11,7 +11,8 @@ export const reducers = function(todos, filter, locale) {
   return combineReducers({
     todos,
     filter,
-    locale
+    locale,
+    localize,
+    router: routerReducer
   })
 };
-

@@ -56,8 +56,9 @@ export const todos = function() {
             todo
         )
 
-      case events.COMPLETE_ALL_TODOS:
-        const areAllMarked = state.every(todo => todo.completed)
+      case events.TOGGLE_TODO_COMPLETION:
+        const areAllMarked = state.every(todo => todo.completed);
+        console.log('Toggle all', areAllMarked);
         return state.map(todo => ({
           ...todo,
           completed: !areAllMarked

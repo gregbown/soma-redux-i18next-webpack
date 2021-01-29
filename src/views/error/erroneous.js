@@ -9,8 +9,8 @@
  * @param {object} emitter
  *
  */
-export const error = function (store, actions, renderer, emitter) {
-  console.log('Error:constructor');
+export const erroneous = function (store, actions, renderer, emitter) {
+  console.log('Erroneous:constructor');
   this.templates = null;
   this._unsubscribe = null;
   this._previous = null;
@@ -18,13 +18,13 @@ export const error = function (store, actions, renderer, emitter) {
   this._actions = actions;
   this._renderer = renderer;
   this._emitter = emitter;
-  this._emitter.addListener('error', this.init.bind(this));
-  this._emitter.addListener('error:destroy', this.destroy.bind(this));
+  this._emitter.addListener('erroneous', this.init.bind(this));
+  this._emitter.addListener('erroneous:destroy', this.destroy.bind(this));
 };
 
-error.prototype = {
+erroneous.prototype = {
   init: function(event) {
-    console.log('Error:init:event', event);
+    console.log('Erroneous:init:event', event);
     if (typeof event.templates === 'undefined') {
       throw new Error('error: templates are undefined in input  component');
     }

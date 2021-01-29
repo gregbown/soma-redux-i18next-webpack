@@ -1,12 +1,13 @@
 import * as _ from 'lodash';
 import * as $ from 'jquery';
-import 'popper.js/dist/umd/popper';
+import '@popperjs/core/dist/umd/popper';
 import 'bootstrap/dist/js/bootstrap';
 import i18next from 'i18next';
 import i18nextXHRBackend from 'i18next-xhr-backend';
 import i18nextBrowserLanguageDetector from 'i18next-browser-languagedetector';
 import cookies from 'browser-cookies';
 import ejs from 'ejs';
+import * as DD from 'deep-diff';
 import * as soma from '@soundstep/soma/dist/soma';
 import {rws} from './services/rws';
 import {loader} from './services/loader';
@@ -15,14 +16,24 @@ import {actions} from './actions';
 import {todos} from './reducers/todos';
 import {filter} from './reducers/filter';
 import {locale} from './reducers/locale';
+import {persist} from './reducers/persist';
 import {reducers} from './reducers/reducers';
+import {logic} from './logic'
 import {configuration} from './store/configuration';
 import {store} from './store';
-import {head} from './views/common/head';
+import {header} from './views/common/header';
 import {input} from './views/todo/input';
 import {list} from './views/todo/list';
-import {filtering} from './views/todo/foot';
-import {router} from './controllers/router';
+import {foot} from './views/todo/foot';
+import {persistence} from './services/persistence';
+import {connector} from "./routing/connector";
+import {router} from "./routing/router";
+import {routerReducer} from "./reducers/router-reducer";
+import {routerMiddleware} from "./middleware/router-middleware";
+import {startListener} from "./utils/start-listener";
+import {todo} from "./views/todo/todo";
+import {erroneous} from "./views/error/erroneous";
+import {home} from "./views/home";
 
 'use strict';
 
@@ -49,25 +60,34 @@ const App = new soma.Application.extend({
     this.injector.mapClass('rws', rws, true);
     this.injector.mapClass('loader', loader, true);
     this.injector.mapClass('renderer', renderer, true);
+    this.injector.mapClass('persistence', persistence, true);
     this.injector.mapClass('actions', actions, true);
     this.injector.mapClass('todos', todos, true);
     this.injector.mapClass('filter', filter, true);
     this.injector.mapClass('locale', locale, true);
+    this.injector.mapClass('persist', persist, true);
+    this.injector.mapClass('routerReducer', routerReducer, true);
     this.injector.mapClass('reducers', reducers, true);
+    this.injector.mapClass('logic', logic, true);
+    this.injector.mapClass('routerMiddleware', routerMiddleware, true);
     this.injector.mapClass('configuration', configuration, true);
     this.injector.mapClass('store', store, true);
-    this.injector.mapClass('head', head, true);
+    this.injector.mapClass('router', router, true);
+    this.injector.mapClass('startListener', startListener, true);
+    this.injector.mapClass('connector', connector, true);
+    this.injector.mapClass('home', home, true);
+    this.injector.mapClass('erroneous', erroneous, true);
+    this.injector.mapClass('todo', todo, true);
+    this.injector.mapClass('header', header, true);
     this.injector.mapClass('input', input, true);
     this.injector.mapClass('list', list, true);
-    this.injector.mapClass('filtering', filtering, true);
-    // TODO Routing is not implemented yet
-    this.injector.mapClass('router', router, true);
+    this.injector.mapClass('foot', foot, true);
   },
   start: function() {
     /* Set if not set. Typically this cookie should be set by the server, Apache, NGINX etc.
      * to the users preferred language set in their browser.  TODO Create document for doing this on server */
     const lng = cookies.get('locale') || 'en';
-    cookies.set('locale', lng, {expires: new Date(Date.now() + 86400000), httpOnly: false, domain: '127.0.0.1'});
+    cookies.set('locale', lng, {expires: new Date(Date.now() + 86400000), httpOnly: false, domain: 'localhost'});
     const i18nOptions = {
       fallbackLng: lng,
       preload: ['en', 'zh'],
@@ -91,13 +111,18 @@ const App = new soma.Application.extend({
       /* Fix for global availability, not sure why webpack provide does not work here */
       window['i18next'] = i18next;
       console.log(`Localization ${(i18next.t('test') === 'loaded' ? 'is loaded' : 'failed to load')}`, result);
-      const head = this.injector.getValue('head');
+      const connector = this.injector.getValue('connector');
+      const header = this.injector.getValue('header');
+      const erroneous = this.injector.getValue('erroneous');
+      const home = this.injector.getValue('home');
+      const todo = this.injector.getValue('todo');
       const input = this.injector.getValue('input');
       const list = this.injector.getValue('list');
-      const filtering = this.injector.getValue('filtering');
+      const foot = this.injector.getValue('foot');
       const loader = this.injector.getValue('loader');
       this.emitter.dispatch('start');
     }.bind(this));
+    window['DD'] = DD.DeepDiff;
   }
 });
 

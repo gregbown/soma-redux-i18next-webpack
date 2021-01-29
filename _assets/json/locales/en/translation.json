@@ -2,7 +2,8 @@
   "Active": "Active",
   "All": "All",
   "test": "loaded",
-  "TODO": "TODO",
+  "todo": "TODO",
+  "home": "Home",
   "Menu": "Menu",
   "Clear completed": "Clear completed",
   "Completed": "Completed",
@@ -12,10 +13,11 @@
   "items left": "items left",
   "chinese": "Chinese",
   "english": "English",
+  "Welcome": "Welcome",
   "locale": "Locale",
-  "error": {
-    "404": "Not found",
-    "oops": "Oops",
-    "error": "Error"
-  }
+  "Use Soma": "Use Soma",
+  "Use Redux": "Use Redux",
+  "Use i18next": "Use i18next",
+  "Use Webpack": "Use Webpack",
+  "erroneous": "Error"
 }

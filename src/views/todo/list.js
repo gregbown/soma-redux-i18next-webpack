@@ -1,7 +1,5 @@
 'use strict';
 
-import {foot} from "./foot";
-
 const ENTER_KEY = 13;
 const ESCAPE_KEY = 27;
 
@@ -15,54 +13,66 @@ const ESCAPE_KEY = 27;
  *
  */
 export const list = function(store, actions, renderer, emitter) {
-  console.log('Page:constructor');
-  this.toggleAll = document.getElementById('toggleAll');
-  this.todoList = document.getElementById('todoList');
+  console.log('List:constructor');
+  this.templates = null;
+  this.todoList = null;
   this.todos = null;
+  this._previous = null;
+  this._unsubscribe = null
   this._store = store;
   this._actions = actions;
   this._renderer = renderer;
   this._emitter = emitter;
-  this._current = this._store.getState();
-  this._store.subscribe(this.storeUpdated.bind(this));
-  this._emitter.addListener('config', (event) => {
-    console.log('View:config:event', event);
-    if (typeof event.templates !== 'undefined') {
-      this.templates = event.templates;
-      this.render(this._current);
-    }
-  })
+  this._emitter.addListener('list', this.init.bind(this));
+  this._emitter.addListener('list:destroy', this.destroy.bind(this));
 };
 
 list.prototype = {
+  init: function(event) {
+    console.log('List:init:event', event);
+    if (typeof event.templates === 'undefined') {
+      throw new Error('error: templates are undefined in input  component');
+    }
+    this.templates = event.templates;
+    this._unsubscribe = this._store.subscribe(this.update.bind(this));
+    /* must be deep copy */
+    this._previous = JSON.parse(JSON.stringify(this._store.getState()));
+    this.todoList = document.getElementById('todoList');
+    this.render(this._store.getState());
+  },
   render: function(state) {
     if (Array.isArray(state.todos)) {
-      this._renderer.render(this, state, {mode: 'afterbegin', id: 'todoList'}, this.addListeners);
+      this._renderer.render(this, state, {mode: 'afterbegin', id: 'todoList', template: 'todoList'}, this.addListeners);
     }
   },
-  storeUpdated: function() {
-    this._current = this._store.getState();
-    console.log('Store updated in list', this._current);
-    this.render(this._current);
-    // this.renderFooter(this._current);
-  },
-  filter: function(event) {
-    console.log('View:todo:filter', event);
-    const filter = event.target.id;
-    this._store.dispatch(this._actions.setVisibilityFilter(filter));
+  update: function() {
+    if (typeof this._unsubscribe === 'function') {
+      const diff = DD.DeepDiff(this._previous, this._store.getState(), function (path, key) {
+        /* Needs to render on todos or filter change */
+        const exclude = ['locale', 'router'];
+        return (path.length === 0 && exclude.indexOf(key) > -1);
+      });
+      /* Re-do deep copy */
+      this._previous = JSON.parse(JSON.stringify(this._store.getState()));
+      console.log('STORE:UPDATE:LIST', (typeof diff !== 'undefined' ? diff : ' nothing changed'));
+      if (typeof diff !== 'undefined') {
+        this.todoList = document.getElementById('todoList');
+        this.render(this._store.getState());
+      }
+    }
   },
   toggle: function(event) {
-    console.log('View:toggle', event);
+    // console.log('View:toggle', event);
     const id = event.target.value;
     this._store.dispatch(this._actions.completeTodo(id));
   },
-  destroy: function(event) {
-    console.log('View:destroy', event);
+  remove: function(event) {
+    // console.log('View:remove', event);
     const id = event.target.value;
     this._store.dispatch(this._actions.deleteTodo(id));
   },
   editTodo: function(event) {
-    console.log(`Editing todo ${event.target.id}`, event);
+    // console.log(`Editing todo ${event.target.id}`, event);
     event.target.removeAttribute('readonly');
     window.setTimeout(() => {
       if (window.getSelection) {window.getSelection().removeAllRanges();}
@@ -72,7 +82,7 @@ list.prototype = {
     }, 0)
   },
   editing: function(event) {
-    console.log('View:todo:keyup', event);
+    // console.log('View:todo:keyup', event);
     const text = event.target.value.trim();
     const id = event.target.id;
     if ((event.keyCode === ENTER_KEY || event.which === ENTER_KEY) && text !== '') {
@@ -81,25 +91,35 @@ list.prototype = {
     }
     if ((event.keyCode === ESCAPE_KEY || event.which === ESCAPE_KEY)) {
       event.target.blur();
-      this._current = this._store.getState();
-      this.render(this._current);
-      // this.renderFooter(this._current);
+      this.render(this._store.getState());
     }
   },
   addListeners: function(instance) {
-    console.log('View:addToDoListeners');
-    instance.toggleBtns = document.querySelectorAll('.toggle');
-    instance.destroyBtns = document.querySelectorAll('.destroy');
+    // console.log('View:addToDoListeners');
     Array.prototype.forEach.call(document.querySelectorAll('.todo'), function(el) {
       el.addEventListener('dblclick', instance.editTodo);
       el.addEventListener('keyup', instance.editing.bind(instance));
-      // el.addEventListener('blur', instance.blurTodo.bind(instance));
     }.bind(instance));
-    Array.prototype.forEach.call(document.querySelectorAll('.destroy'), function(el) {
-      el.addEventListener('click', instance.destroy.bind(instance));
+    Array.prototype.forEach.call(document.querySelectorAll('.remove'), function(el) {
+      el.addEventListener('click', instance.remove.bind(instance));
     }.bind(instance));
     Array.prototype.forEach.call(document.querySelectorAll('.toggle'), function(el) {
       el.addEventListener('change', instance.toggle.bind(instance));
     }.bind(instance));
+  },
+  destroy: function() {
+    console.log('List:destroy:event');
+    this._unsubscribe();
+    this._unsubscribe = null;
+    Array.prototype.forEach.call(document.querySelectorAll('.todo'), function(el) {
+      el.removeEventListener('dblclick', this.editTodo);
+      el.removeEventListener('keyup', this.editing);
+    }.bind(this));
+    Array.prototype.forEach.call(document.querySelectorAll('.remove'), function(el) {
+      el.removeEventListener('click', this.remove);
+    }.bind(this));
+    Array.prototype.forEach.call(document.querySelectorAll('.toggle'), function(el) {
+      el.removeEventListener('change', this.toggle);
+    }.bind(this));
   }
 }

@@ -5,7 +5,7 @@ import {events} from '../constants/events';
  * Copyright (c) 2017 Michael Sargent redux-first-routing
  * See: https://github.com/mksarge/redux-first-routing
  */
-export const routerState = function() {
+export const routerMiddleware = function() {
   return (history) => () => (next) => (action) => {
     switch (action.type) {
       case events.PUSH:

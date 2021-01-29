@@ -9,7 +9,7 @@
  * @param {object} emitter
  *
  */
-export const homePage = function (store, actions, renderer, emitter) {
+export const home = function (store, actions, renderer, emitter) {
   console.log('Home:constructor');
   this.templates = null;
   this._unsubscribe = null;
@@ -22,7 +22,7 @@ export const homePage = function (store, actions, renderer, emitter) {
   this._emitter.addListener('home:destroy', this.destroy.bind(this));
 };
 
-homePage.prototype = {
+home.prototype = {
   init: function(event) {
     console.log('Home:init:event', event);
     if (typeof event.templates === 'undefined') {

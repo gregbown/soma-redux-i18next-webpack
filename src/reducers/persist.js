@@ -3,7 +3,6 @@ import {events} from '../constants/events';
 export const persist = function() {
 
   const initialState = {
-    translation: {},
     status: ''
   };
 
@@ -13,12 +12,10 @@ export const persist = function() {
         return {
           ...state,
           status: `Persisting... ${(new Date()).toLocaleString()}`,
-          translation: {}
         };
       case events.PERSIST_SUCCESS:
         return {
           ...state,
-          translation: {en: action.text, zh: action.text},
           status: `Persisted ${(new Date()).toLocaleString()}`
         };
       case events.PERSIST_FAILURE:

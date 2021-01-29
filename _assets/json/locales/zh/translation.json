@@ -2,7 +2,8 @@
   "Active": "活性",
   "All": "所有",
   "test": "loaded",
-  "TODO": "待办事项",
+  "todo": "待办事项",
+  "home": "家",
   "Menu": "导航",
   "Clear completed": "清除完成",
   "Completed": "已完成",
@@ -14,9 +15,10 @@
   "chinese": "中文",
   "english": "英語",
   "locale": "語言",
-  "error": {
-    "404": "找不到网页！",
-    "oops": "糟糕！發生錯誤。",
-    "error": "错误"
-  }
+  "Welcome": "欢迎",
+  "Use Soma": "使用soma",
+  "Use Redux": "使用redux",
+  "Use i18next": "使用i18next",
+  "Use Webpack": "使用Webpack",
+  "erroneous": "错误"
 }

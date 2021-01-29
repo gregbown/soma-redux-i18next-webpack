@@ -11,7 +11,7 @@ export const routerReducer = function() {
     pathname: '/',
     search: '',
     queries: {},
-    hash: '',
+    view: ''
   };
 
   return (state = initialState, action) => {

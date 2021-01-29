@@ -77,6 +77,8 @@ declare module soma {
     add(commandName: string, command: any):void;
     remove(commandName: string):void;
     dispose():void;
+    addInterceptor(scope: any, id: string, command: any): any;
+    removeInterceptor(scope: any, id: string): void;
   }
   export class Mediators {
     create(cl:any, target:any):any;

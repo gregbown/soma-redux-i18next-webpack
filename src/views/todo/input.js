@@ -1,7 +1,5 @@
 'use strict';
 
-import {foot} from "./foot";
-
 const ENTER_KEY = 13;
 
 /**
@@ -11,41 +9,46 @@ const ENTER_KEY = 13;
  * @param {object} actions
  * @param {object} renderer
  * @param {object} emitter
- *
  */
 export const input = function(store, actions, renderer, emitter) {
-  console.log('Page:constructor');
-  this.newTodo = document.getElementById('newTodo');
-  this.toggleAll = document.getElementById('toggleAll');
+  console.log('Input:constructor');
+  this.templates = null;
+  this.newTodo = null;
+  this._previous = null;
+  this._unsubscribe = null;
   this._store = store;
   this._actions = actions;
   this._renderer = renderer;
   this._emitter = emitter;
-  this._current = this._store.getState();
-  this._store.subscribe(this.storeUpdated.bind(this));
-  this._emitter.addListener('config', (event) => {
-    console.log('View:config:event', event);
-    if (typeof event.templates !== 'undefined') {
-      this.templates = event.templates;
-      this.render(this._current);
-    }
-  });
-  this.toggleAll.addEventListener('change', this.toggle.bind(this));
+  this._emitter.addListener('input', this.init.bind(this));
+  this._emitter.addListener('input:destroy', this.destroy.bind(this));
 };
 
 input.prototype = {
+  init: function(event) {
+    console.log('Input:init:event', event);
+    if (typeof event.templates === 'undefined') {
+      throw new Error('error: templates are undefined in input  component');
+    }
+    this.templates = event.templates;
+    this._unsubscribe = this._store.subscribe(this.update.bind(this));
+    /* must be deep copy */
+    this._previous = JSON.parse(JSON.stringify(this._store.getState()));
+    this.render(this._store.getState());
+  },
   focus: function(event) {
-    console.log('View:focus', event);
+    // console.log('View:focus', event);
     this.newTodo.addEventListener('keyup', this.keyboard.bind(this));
   },
   blur: function(event) {
-    console.log('View:blur', event);
+    // console.log('View:blur', event);
     this.newTodo.removeEventListener('keyup', this.keyboard.bind(this));
   },
   keyboard: function(event) {
-    console.log('View:keyup', event);
+    // console.log('View:keyup', event);
     const value = event.target.value.trim();
-    if ((event.keyCode === ENTER_KEY || event.which === ENTER_KEY) && value !== '' ) {
+    /* Detect enter key */
+    if ((event.keyCode === ENTER_KEY || event.which === ENTER_KEY) && value !== '') {
       event.target.blur();
       this._store.dispatch( this._actions.addTodo(value));
       event.target.value = '';
@@ -57,16 +60,30 @@ input.prototype = {
     instance.newTodo.addEventListener('blur', instance.blur.bind(instance));
   },
   render: function(state) {
-    this._renderer.render(this, state, {mode: 'replace', id: 'newTodo'}, this.addListeners);
+    this._renderer.render(this, state, {mode: 'replace', id: 'newTodo', template: 'newTodo'}, this.addListeners);
   },
-  storeUpdated: function() {
-    this._current = this._store.getState();
-    console.log('Store updated in input', this._current);
-    this.render(this._current);
+  update: function() {
+    if (typeof this._unsubscribe === 'function') {
+      const diff = DD.DeepDiff(this._previous, this._store.getState(), function (path, key) {
+        /* Only respond to router... probably does not even need that */
+        const exclude = ['todos', 'filter'];
+        return (path.length === 0 && exclude.indexOf(key) > -1);
+      });
+      /* Re-do deep copy */
+      this._previous = JSON.parse(JSON.stringify(this._store.getState()));
+      console.log('STORE:UPDATE:INPUT', (typeof diff !== 'undefined' ? diff : ' nothing changed'));
+      if (typeof diff !== 'undefined') {
+        this.render(this._store.getState());
+      }
+    }
   },
-  toggle: function(event) {
-    console.log('Toggle all in input', event);
-    event.target.blur();
-    this._store.dispatch( this._actions.completeAllTodos());
+  destroy: function() {
+    console.log('Input:destroy:event');
+    this._unsubscribe();
+    this._unsubscribe = null;
+    this.newTodo.removeEventListener('focus', this.focus);
+    this.newTodo.removeEventListener('blur', this.blur);
+    this.newTodo.removeEventListener('keyup', this.keyboard);
+    this.newTodo = null;
   }
 }

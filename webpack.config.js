@@ -44,23 +44,38 @@ module.exports = (env, argv) => ({
           mangle: {
             properties: false,
             reserved: [
+              "DD",
+              "cookies",
               "i18next",
               "emitter",
+              "commands",
               "rws",
               "loader",
               "renderer",
               "actions",
               "todos",
+              "todo",
+              "error",
+              "home",
               "filter",
               "locale",
+              "routerMiddleware",
+              "createBrowserHistory",
+              "logic",
+              "persist",
+              "routerReducer",
               "reducers",
               "configuration",
               "store",
-              "head",
+              "startListener",
+              "connector",
+              "header",
               "input",
               "list",
               "foot",
-              "router"
+              "router",
+              "persistence",
+              "bootstrap"
             ]
           }
         }
@@ -122,7 +137,7 @@ module.exports = (env, argv) => ({
       inject: true,
       chunks: ['vendor', 'app'],
       hash: true,
-      template: './_templates/index.html',
+      template: './_html/index.html',
       filename: 'index.html'
     }),
     new CompressionPlugin({
@@ -135,13 +150,20 @@ module.exports = (env, argv) => ({
       $: 'jquery',
       jQuery: 'jquery',
       i18next: 'i18next', // <= this does not seem to work, I still have to use => window['i18next'] = i18next;
-      ejs: 'ejs'
+      ejs: 'ejs',
+      cookies: 'cookies',
+      popper: 'popper',
+      bootstrap: 'bootstrap',
     })
   ],
   // TODO This is not setup yet
   devServer: {
     contentBase: 'dist',
+    clientLogLevel: 'debug',
     watchContentBase: true,
-    port: 1000
+    historyApiFallback: true,
+    publicPath: '/',
+    host: 'localhost',
+    port: 80
   }
 });
