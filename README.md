@@ -2,7 +2,12 @@
 
 Demo is a todo application. Through the magic of Webpack it is reduced from about 1,300kb down to 111kb
 
-Build:
+Dev build and run:
+
+```bash
+npm start
+```
+Production build:
 
 ```bash
 npm run build
@@ -31,15 +36,23 @@ I discovered an interesting way to use EJS templates somewhat like a JSX compone
 Using [this method](https://github.com/gregbown/soma-redux-i18next-webpack/blob/5bc24b06c85dc3ffae4a5a17a877fa010c154121/_assets/json/config.json#L18) the todos conditionally render based on the filters All, Completed and Active.
 
 [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) is also included, along with theme compilation in SCSS. [repo](https://github.com/twbs/bootstrap)
+Note: Bootstrap 5 has quite a few breaking changes so be sure to read the migration section in their documentation!
 
 Using [Material Design icons](https://material.io/resources/icons/?style=baseline) along with the [latest SASS/SCSS CSS compilation](https://github.com/sass/dart-sass).
 I implemented the Material Design icons in a slightly different way than most people would, [using sudo elements :before](https://github.com/gregbown/soma-redux-i18next-webpack/blob/5bc24b06c85dc3ffae4a5a17a877fa010c154121/_scss/theme/todo-theme.scss#L176).
 I am pretty excited that they work this way since adding extra span tags is not always ideal.
+
+Using [Universal Router](https://github.com/kriasoft/universal-router) with [Redux-First Routing](https://github.com/mksarge/redux-first-routing) however I slightly modified the redux-first-routing library to include the view mapping in the state, therefore it is not in the dependencies but built into my redux store.
+I made sure to include the credits and licence in my Webpack build output.
+
+Hooked up [Redux Logger](https://github.com/LogRocket/redux-logger) as well.
 
 Notes on using Webpack:
 I had to spend a bit of time figuring out the syntax for the Webpack Terser plugin in order to minimize everything. Originally it wiped out the [infuse](https://github.com/soundstep/infuse) libraries ability to inject dependencies because method, module or class names weren't persisted.
 After much experimentation, I was able to get all the JavaScript including all the libs down to 111kb!  Thank you Webpack!
 Webpack can be found [here](https://github.com/webpack/webpack) and documentation [here](https://webpack.js.org/concepts/)
 
-TODO: improve webpack build to maybe have a dev mode
+One thing that bit me was i18next localization being called inside the EJS templating. If I wasn't careful about changing the locale with the changeLanguage method prior to rendering, it would render the old locale despite the state reflecting the proper locale.
+
+Todo: I haven't localized the top navigation yet.
 
