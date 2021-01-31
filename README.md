@@ -19,8 +19,8 @@ Simulates a production server using [local-web-server](https://github.com/lwsjs/
 ```bash
 npm run serve:prod
 ```
-[Soma is a scalable Javascript framework](https://github.com/soundstep/soma) created to help developers to write loosely-coupled applications to increase scalability and maintainability.
-I think it is the perfect balance when you don't want a full framework like React, Angular or Vue and it can be super powerful if it is combined with a lightweight router and maybe two-way binding...
+[Soma](https://github.com/soundstep/soma) is a super lightweight plain Javascript framework created to help developers to write loosely-coupled applications to increase scalability and maintainability.
+I think it is the perfect balance when you don't want, or can't use a full framework like React, Angular or Vue, and it can be super powerful when combined with a lightweight router and state management.
 
 The older version, soma.js can be found [here](https://github.com/somajs/somajs), and is fully documented [here](http://somajs.github.io/somajs/site/). Upgrading to the newer version of soma is  fairly easy. I believe the only thing that really changed in implementation is that the dispatcher is now the emitter.
 Internally the latest soma uses two other libraries that are pretty amazing as well, [infuse](https://github.com/soundstep/infuse) and [signals](https://github.com/millermedeiros/js-signals), also ported from Actionscript.
@@ -44,7 +44,7 @@ I made sure to include the credits and licence in my Webpack build output.
 
 Hooked up [Redux Logger](https://github.com/LogRocket/redux-logger) as well.
 
-Todo: I haven't localized the top navigation yet. I need to have finite state management for several parts of my real requirement (see requirements above), so I will be working on that piece.
+Todo: I haven't localized the top navigation yet. I need to have finite state management for several parts of my real requirement (see requirements above), so I will be working on that piece. I would like to try rewriting EJS to include two-way binding but that is a bit ambitious.
 
 ## Making it pretty
 
