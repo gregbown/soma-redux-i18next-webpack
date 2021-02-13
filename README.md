@@ -27,9 +27,12 @@ Internally the latest soma uses two other libraries that are pretty amazing as w
 I am not sure why I didn't discover them back in my Actionscript days, maybe I was too busy trying to get pureMVC and robot legs working.
 Anyway, a big thank you to [Romuald Quantin](http://www.soundstep.com/blog/about/) for the really elegant framework.
 
-Redux can be found [here](https://github.com/reduxjs/redux), and the documentation is [here](https://redux.js.org/introduction/getting-started)
+Redux does not need any explanation, it can be found [here](https://github.com/reduxjs/redux), and the documentation is [here](https://redux.js.org/introduction/getting-started)
+One of the main objectives in this experiment was the need for a more robust, composable state management. Previous attempts at managing state quickly turned into spaghetti code with tightly coupled event handlers everywhere, what a relief to have the unidirectional state management of Redux.
+Of course without React there was a lot of learning the nuances of leveraging this at the component level. One really starts to appreciate large frameworks like React, Angular and Vue, with all the magic they do behind the scenes.
 
 I compared several strategies for handling effects, [Redux Thunk](https://github.com/gaearon/redux-thunk), [Redux Observable](https://github.com/redux-observable/redux-observable), [Redux Loop](https://github.com/raisemarketplace/redux-loop) and a few more. I finally went with [Redux Logic](https://github.com/jeffbski/redux-logic) as this one seemed to play the nicest with plain JavaScript, to be honest it was the only one I could integrate in a clean fashion and it also provided my with a lot of flexibility in coding style. Thank you mr. Jeff Barczewski for the effort you put into Redux Logic!
+In the code, the effect is used to mock persistence layer for todos. It is not fully implemented here, just proof of concept or enough to evaluate Redux Logic.
 
 i18next client side localization found [here](https://github.com/i18next/i18next) and documented [here](https://www.i18next.com/overview/getting-started)
 One thing that bit me was i18next localization being called inside the EJS templating. If I wasn't careful about changing the locale with the changeLanguage method prior to rendering, it would render the old locale despite the state reflecting the proper locale.
@@ -55,7 +58,7 @@ Using [Material Design icons](https://material.io/resources/icons/?style=baselin
 I implemented the Material Design icons in a slightly different way than most people would, [using sudo elements :before](https://github.com/gregbown/soma-redux-i18next-webpack/blob/5bc24b06c85dc3ffae4a5a17a877fa010c154121/_scss/theme/todo-theme.scss#L176).
 I am pretty excited that they work this way since adding extra span tags is not always ideal.
 
-Notes on using Webpack:
+## Build process. Notes on using Webpack:
 I had to spend a bit of time figuring out the syntax for the Webpack Terser plugin in order to minimize everything. Originally it wiped out the [infuse](https://github.com/soundstep/infuse) libraries ability to inject dependencies because method, module or class names weren't persisted.
 After much experimentation, I was able to get all the JavaScript including all the libs down to 111kb!  Thank you Webpack!
 Webpack can be found [here](https://github.com/webpack/webpack) and documentation [here](https://webpack.js.org/concepts/)

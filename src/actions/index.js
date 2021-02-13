@@ -1,5 +1,4 @@
 import {events} from '../constants/events';
-import {views} from '../constants/view-list';
 import {parse} from 'query-string';
 
 export const actions = function() {
@@ -22,14 +21,17 @@ export const actions = function() {
     go: (index) => ({type: events.GO, payload: index}),
     goBack: () => ({type: events.GO_BACK}),
     goForward: () => ({type: events.GO_FORWARD}),
-    locationChange: ({ pathname, search, hash, view }) => ({
-      type: events.LOCATION_CHANGE,
-      payload: {
-        pathname,
-        search,
-        queries: parse(search),
-        view: (pathname === '/' ? 'home': (views.indexOf(pathname.substr(1)) >= 0 ? pathname.substr(1) : 'erroneous'))
+    locationChange: ({ pathname, search, view }) => {
+      console.log('ACTION: locationChange', view);
+      return {
+        type: events.LOCATION_CHANGE,
+          payload: {
+          pathname,
+            search,
+            queries: parse(search),
+            view: view
+        }
       }
-    })
+    }
   }
 };

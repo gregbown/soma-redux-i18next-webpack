@@ -26,7 +26,6 @@ import {input} from './views/todo/input';
 import {list} from './views/todo/list';
 import {foot} from './views/todo/foot';
 import {persistence} from './services/persistence';
-import {connector} from "./routing/connector";
 import {router} from "./routing/router";
 import {routerReducer} from "./reducers/router-reducer";
 import {routerMiddleware} from "./middleware/router-middleware";
@@ -72,9 +71,8 @@ const App = new soma.Application.extend({
     this.injector.mapClass('routerMiddleware', routerMiddleware, true);
     this.injector.mapClass('configuration', configuration, true);
     this.injector.mapClass('store', store, true);
-    this.injector.mapClass('router', router, true);
     this.injector.mapClass('startListener', startListener, true);
-    this.injector.mapClass('connector', connector, true);
+    this.injector.mapClass('router', router, true);
     this.injector.mapClass('home', home, true);
     this.injector.mapClass('erroneous', erroneous, true);
     this.injector.mapClass('todo', todo, true);
@@ -111,7 +109,7 @@ const App = new soma.Application.extend({
       /* Fix for global availability, not sure why webpack provide does not work here */
       window['i18next'] = i18next;
       console.log(`Localization ${(i18next.t('test') === 'loaded' ? 'is loaded' : 'failed to load')}`, result);
-      const connector = this.injector.getValue('connector');
+      const router = this.injector.getValue('router');
       const header = this.injector.getValue('header');
       const erroneous = this.injector.getValue('erroneous');
       const home = this.injector.getValue('home');

@@ -74,6 +74,7 @@ module.exports = (env, argv) => ({
               "list",
               "foot",
               "router",
+              "builder",
               "persistence",
               "bootstrap"
             ]

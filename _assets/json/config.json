@@ -93,5 +93,27 @@
       "<% } %>",
       "</div>"
     ]
-  }
+  },
+  "routes": [
+    {
+      "path": "/",
+      "component": "home"
+    },
+    {
+      "path": "/todo",
+      "component": "todo",
+      "children": {
+        "path": "",
+        "component": [
+          {"component": "input"},
+          {"component": "list"},
+          {"component": "foot"}
+        ]
+      }
+    },
+    {
+      "path": "(.*)",
+      "component": "erroneous"
+    }
+  ]
 }
