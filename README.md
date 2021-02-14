@@ -43,7 +43,7 @@ I discovered an interesting way to use EJS templates somewhat like a JSX compone
 Using [this method](https://github.com/gregbown/soma-redux-i18next-webpack/blob/5bc24b06c85dc3ffae4a5a17a877fa010c154121/_assets/json/config.json#L18) the todos conditionally render based on the filters All, Completed and Active.
 
 Using [Universal Router](https://github.com/kriasoft/universal-router) with [Redux-First Routing](https://github.com/mksarge/redux-first-routing) however I slightly modified the redux-first-routing library to include the view mapping in the state, therefore it is not in the dependencies but built into my redux store.
-I made sure to include the credits and licence in my Webpack build output.
+I made sure to include the credits and licence in my Webpack build output. Managed to get runtime route loading working, the routes configured in JSON, enabling the string names/paths can be changed as needed.
 
 Hooked up [Redux Logger](https://github.com/LogRocket/redux-logger) as well.
 

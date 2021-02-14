@@ -46,7 +46,7 @@ foot.prototype = {
     if (typeof this._unsubscribe === 'function') {
       const diff = DD.DeepDiff(this._previous, this._store.getState(), function (path, key) {
         /* Only respond to to filter state change */
-        const exclude = ['todos', 'router'];
+        const exclude = ['router'];
         return (path.length === 0 && exclude.indexOf(key) > -1);
       });
       /* Re-do deep copy */
