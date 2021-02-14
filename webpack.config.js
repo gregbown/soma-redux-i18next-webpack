@@ -2,8 +2,7 @@ const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const WebpackMd5Hash = require('webpack-md5-hash');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const {WebpackManifestPlugin} = require('webpack-manifest-plugin');
@@ -20,13 +19,12 @@ module.exports = (env, argv) => ({
     }
   },
   entry: {
-    app: ['./src/main.js',  './_scss/main.scss', ...stylesForPages('./_scss/_pages/*.scss')]
+    app: ['./src/index.js',  './_scss/main.scss', ...stylesForPages('./_scss/_pages/*.scss')]
   },
   optimization: {
-    minimize: true,
+    minimize: (argv.mode !== 'development'),
     minimizer: [
       new TerserPlugin({
-        // exclude: ["app"],
         extractComments: {
           condition: /^\**!|@preserve|@license|@cc_on/i,
           filename: (fileData) => {
@@ -47,6 +45,7 @@ module.exports = (env, argv) => ({
               "DD",
               "cookies",
               "i18next",
+              "bootstrap",
               "emitter",
               "commands",
               "rws",
@@ -68,15 +67,12 @@ module.exports = (env, argv) => ({
               "configuration",
               "store",
               "startListener",
-              "connector",
               "header",
               "input",
               "list",
               "foot",
               "router",
-              "builder",
-              "persistence",
-              "bootstrap"
+              "persistence"
             ]
           }
         }
@@ -130,10 +126,10 @@ module.exports = (env, argv) => ({
     ]
   },
   plugins: [
-    new CleanWebpackPlugin('dist', {}),
-    new CopyWebpackPlugin([
-      {from: './_assets', to: './'}
-    ]),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{from: './_assets', to: './'}]
+    }),
     new HtmlWebpackPlugin({
       inject: true,
       chunks: ['vendor', 'app'],
@@ -157,7 +153,6 @@ module.exports = (env, argv) => ({
       bootstrap: 'bootstrap',
     })
   ],
-  // TODO This is not setup yet
   devServer: {
     contentBase: 'dist',
     clientLogLevel: 'debug',
